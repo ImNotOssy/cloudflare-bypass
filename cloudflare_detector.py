@@ -1,5 +1,5 @@
 from pathlib import Path
-from cloudflare_bypass.base_detector import BaseDetector
+from base_detector import BaseDetector
 
 image_dir = Path(__file__).parent
 

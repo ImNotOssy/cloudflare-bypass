@@ -2,7 +2,7 @@ from typing import Union
 import time
 import random
 import pyautogui
-from cloudflare_bypass.cloudflare_detector import CloudFlareLogoDetector, CloudFlarePopupDetector
+from cloudflare_detector import CloudFlareLogoDetector, CloudFlarePopupDetector
 
 
 def wait_until(detector, warmup_time: Union[None, int] = None, timeout: int = 20):

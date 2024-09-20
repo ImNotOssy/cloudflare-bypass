@@ -22,11 +22,25 @@ class BaseDetector:
         else:
             return None
 
-    def is_detected(self, driver) -> bool:
+    def is_detected(self, driver, save_screenshot=False, screenshot_path="debug_screenshot.png") -> bool:
+        # Take the screenshot
         screenshot = driver.get_screenshot_as_png()
+        
+        # Optionally save the screenshot to disk for debugging purposes
+        if save_screenshot:
+            with open(screenshot_path, "wb") as f:
+                f.write(screenshot)
+            print(f"Screenshot saved to {screenshot_path}")
+
+        # Convert screenshot to PIL image and then to NumPy array for OpenCV
         image = Image.open(BytesIO(screenshot))
         img_np = np.array(image)
+
+        # Convert the image to grayscale for template matching
         img_gray = cv2.cvtColor(img_np, cv2.COLOR_RGB2GRAY)
 
+        # Perform the template matching
         self.matched_bbox = self._match(img_gray, self.template)
+
+        # Return whether the template was found
         return self.matched_bbox is not None
